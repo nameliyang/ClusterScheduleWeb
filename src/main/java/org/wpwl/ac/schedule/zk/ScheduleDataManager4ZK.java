@@ -403,7 +403,7 @@ public class ScheduleDataManager4ZK implements IScheduleDataManager {
 		byte[] data = this.getZooKeeper().getData(zkPath, null, null);
 		if(null == data || data.length == 0){
 			if(StringUtils.isBlank(taskDefine.getType())){
-				taskDefine.setType(TaskDefine.TYPE_UNCODE_TASK);
+				taskDefine.setType(TaskDefine.TYPE_CLUSTER_TASK);
 			}
 			String json = this.gson.toJson(taskDefine);
 			this.getZooKeeper().setData(zkPath, json.getBytes(), -1);
@@ -513,7 +513,7 @@ public class ScheduleDataManager4ZK implements IScheduleDataManager {
 							 TaskDefine td = this.gson.fromJson(json, TaskDefine.class);
 							 TaskDefine taskDefine = new TaskDefine();
 							 taskDefine.valueOf(td);
-							 if(TaskDefine.TYPE_UNCODE_TASK.equals(taskDefine.getType())){
+							 if(TaskDefine.TYPE_CLUSTER_TASK.equals(taskDefine.getType())){
 								 ownerTask.add(taskName);
 								 DynamicTaskManager.scheduleTask(taskDefine, new Date(getSystemTime()));
 							 }

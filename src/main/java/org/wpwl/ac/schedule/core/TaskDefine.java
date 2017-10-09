@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class TaskDefine {
 	
-	public static final String TYPE_UNCODE_TASK = "uncode-task";
+	public static final String TYPE_CLUSTER_TASK = "cluster-task";
 	public static final String TYPE_SPRING_TASK = "spring-task";
 	public static final String TYPE_QUARTZ_TASK = "quartz";
 	

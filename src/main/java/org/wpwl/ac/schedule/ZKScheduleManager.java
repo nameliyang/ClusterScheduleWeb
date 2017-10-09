@@ -290,7 +290,7 @@ public class ZKScheduleManager extends ThreadPoolTaskScheduler implements Applic
 		if(task instanceof ScheduledMethodRunnable){
 			ScheduledMethodRunnable uncodeScheduledMethodRunnable = (ScheduledMethodRunnable)task;
 			targetMethod = uncodeScheduledMethodRunnable.getMethod();
-			taskDefine.setType(TaskDefine.TYPE_UNCODE_TASK);
+			taskDefine.setType(TaskDefine.TYPE_CLUSTER_TASK);
 			if(StringUtils.isNotBlank(uncodeScheduledMethodRunnable.getExtKeySuffix())){
 				taskDefine.setExtKeySuffix(uncodeScheduledMethodRunnable.getExtKeySuffix());
 			}
