@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -49,6 +50,8 @@ public class ZKScheduleManager extends ThreadPoolTaskScheduler implements Applic
 	protected ZKManager zkManager;
 
 	private IScheduleDataManager scheduleDataManager;
+	
+	public  static AtomicBoolean initialize = new AtomicBoolean(false);
 
 	/**
 	 * 当前调度服务的信息
@@ -358,6 +361,7 @@ public class ZKScheduleManager extends ThreadPoolTaskScheduler implements Applic
 					}
 				}
 				sm.initialData();
+				initialize.set(true);
 			} catch (Throwable e) {
 				log.error(e.getMessage(), e);
 			} finally {

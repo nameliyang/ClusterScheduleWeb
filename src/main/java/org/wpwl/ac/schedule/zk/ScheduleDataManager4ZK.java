@@ -62,6 +62,10 @@ public class ScheduleDataManager4ZK implements IScheduleDataManager {
 		if (getZooKeeper().exists(this.pathServer, false) == null) {
 			ZKTools.createPath(getZooKeeper(),this.pathServer, CreateMode.PERSISTENT, this.zkManager.getAcl());
 		}
+		//创建task path
+		if (getZooKeeper().exists(this.pathTask, false) == null) {
+			ZKTools.createPath(getZooKeeper(),this.pathTask, CreateMode.PERSISTENT, this.zkManager.getAcl());
+		}
 		loclaBaseTime = System.currentTimeMillis();
         String tempPath = this.zkManager.getZooKeeper().create(this.zkManager.getRootPath() + "/systime",null, this.zkManager.getAcl(), CreateMode.EPHEMERAL_SEQUENTIAL);
         Stat tempStat = this.zkManager.getZooKeeper().exists(tempPath, false);

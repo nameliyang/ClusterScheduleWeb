@@ -46,8 +46,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.MethodInvoker;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.context.ContextLoader;
 import org.wpwl.ac.schedule.ConsoleManager;
+import org.wpwl.ac.schedule.ZKScheduleManager;
 import org.wpwl.ac.schedule.core.TaskDefine;
 
 /**
@@ -320,7 +320,10 @@ public class MethodInvokingJobDetailFactoryBean extends ArgumentConvertingMethod
 		 */
 		@Override
 		protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-			
+			    if(!ZKScheduleManager.initialize.get()){
+			    	logger.debug("cluster-schedule初始化中");
+			    	return;  
+			    }
 				TaskDefine taskDefine = new TaskDefine();
 				MethodInvokingJob methodInvokingJob = (org.wpwl.ac.schedule.quartz.MethodInvokingJobDetailFactoryBean.MethodInvokingJob) context.getJobInstance();
 				org.wpwl.ac.schedule.quartz.MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean= (org.wpwl.ac.schedule.quartz.MethodInvokingJobDetailFactoryBean)methodInvokingJob.methodInvoker;
@@ -365,7 +368,7 @@ public class MethodInvokingJobDetailFactoryBean extends ArgumentConvertingMethod
 	    			String msg = null;
 	    			try {
 	    				ReflectionUtils.invokeMethod(setResultMethod, context, this.methodInvoker.invoke());
-		    			LOGGER.info("Cron job has been executed.");
+		    			LOGGER.info(methodInvokingJobDetailFactoryBean.getTargetBeanName() +"."+methodInvokingJobDetailFactoryBean.getTargetMethod()+ " method been executed.");
 					} catch (InvocationTargetException e) {
 						msg = e.getLocalizedMessage();
 					} catch (IllegalAccessException e) {
